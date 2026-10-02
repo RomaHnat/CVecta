@@ -1,0 +1,17 @@
+Jane Smith
+jane.smith@email.com | +44 7700 900123
+
+Summary: Backend software engineer with 4 years of experience building
+scalable web services and APIs.
+
+Experience:
+Senior Backend Engineer, Acme Corp (2022-2025)
+- Built REST APIs in Python and FastAPI
+- Worked with PostgreSQL, Redis and Docker
+- Set up CI/CD pipelines in GitHub Actions
+
+Backend Engineer, StartupXYZ (2021-2022)
+- Developed microservices in Java and Spring Boot
+- Deployed to AWS
+
+Skills: Python, Java, FastAPI, Spring Boot, PostgreSQL, Redis, Docker, AWS, Git
