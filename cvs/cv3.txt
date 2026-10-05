@@ -1,0 +1,24 @@
+Daniel Brooks
+daniel.brooks@email.com | +44 7700 734621
+
+Summary: Backend engineer with 6 years of experience designing
+scalable services and cloud infrastructure.
+
+Experience:
+Lead Backend Engineer, Vertex Digital (2021-2026)
+
+Designed microservices with Java and Spring Boot
+
+Managed PostgreSQL and Kafka infrastructure
+
+Deployed applications using Kubernetes
+
+Software Engineer, TechNova (2019-2021)
+
+Developed Java-based REST services
+
+Created automated testing pipelines
+
+Monitored applications using Grafana
+
+Skills: Java, Spring Boot, PostgreSQL, Kafka, Kubernetes, Docker, Grafana, AWS

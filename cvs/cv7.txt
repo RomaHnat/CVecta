@@ -1,0 +1,24 @@
+Liam Foster
+liam.foster@email.com | +44 7700 467812
+
+Summary: Software developer with 3 years of experience developing
+JavaScript applications, APIs and cloud services.
+
+Experience:
+Software Engineer, CodeHarbor (2023-2026)
+
+Developed Node.js and TypeScript services
+
+Built REST and GraphQL APIs
+
+Used Redis for caching and background jobs
+
+Junior Developer, DigitalPeak (2021-2023)
+
+Built web interfaces with Vue.js
+
+Integrated REST APIs
+
+Maintained MySQL databases
+
+Skills: TypeScript, JavaScript, Node.js, GraphQL, Vue.js, Redis, MySQL, Docker

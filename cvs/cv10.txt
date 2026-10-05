@@ -1,0 +1,24 @@
+Charlotte Evans
+charlotte.evans@email.com | +44 7700 581926
+
+Summary: Full-stack software engineer with 6 years of experience
+building scalable applications and cloud-based platforms.
+
+Experience:
+Senior Software Engineer, NovaTech (2021-2026)
+
+Built applications with React and Python
+
+Designed APIs using FastAPI
+
+Managed PostgreSQL and Redis infrastructure
+
+Software Engineer, DevWorks (2019-2021)
+
+Developed frontend components with React
+
+Built backend services in Python
+
+Automated deployments with Docker and GitHub Actions
+
+Skills: Python, React, FastAPI, PostgreSQL, Redis, Docker, AWS, GitHub Actions

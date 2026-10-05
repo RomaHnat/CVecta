@@ -1,0 +1,24 @@
+James Taylor
+james.taylor@email.com | +44 7700 823145
+
+Summary: DevOps-focused software engineer with 5 years of experience
+automating infrastructure and improving application delivery.
+
+Experience:
+DevOps Engineer, CloudCore (2022-2026)
+
+Built CI/CD pipelines with GitHub Actions
+
+Managed AWS infrastructure using Terraform
+
+Containerized services with Docker and Kubernetes
+
+Systems Engineer, NetWorks Ltd (2020-2022)
+
+Automated Linux server administration
+
+Created monitoring dashboards
+
+Maintained production infrastructure
+
+Skills: AWS, Terraform, Kubernetes, Docker, Linux, GitHub Actions, Python, Bash

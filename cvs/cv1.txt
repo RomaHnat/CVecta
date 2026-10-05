@@ -1,0 +1,24 @@
+Alex Morgan
+alex.morgan@email.com | +44 7700 912384
+
+Summary: Backend software engineer with 5 years of experience developing
+reliable APIs, distributed services and cloud-based applications.
+
+Experience:
+Senior Software Engineer, Northstar Systems (2023-2026)
+
+Built REST APIs using Python and Django
+
+Managed PostgreSQL and Elasticsearch databases
+
+Automated deployments with GitHub Actions and Docker
+
+Software Engineer, CloudWorks Ltd (2021-2023)
+
+Developed services in Go
+
+Worked with AWS Lambda and S3
+
+Improved API response times through caching
+
+Skills: Python, Go, Django, PostgreSQL, Elasticsearch, Docker, AWS, GitHub Actions

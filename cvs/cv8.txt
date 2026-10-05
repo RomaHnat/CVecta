@@ -1,0 +1,24 @@
+Grace Mitchell
+grace.mitchell@email.com | +44 7700 936421
+
+Summary: Cloud software engineer with 5 years of experience developing
+distributed systems and serverless applications.
+
+Experience:
+Cloud Engineer, SkyLogic (2022-2026)
+
+Developed serverless applications with AWS Lambda
+
+Managed infrastructure using Terraform
+
+Built event-driven systems with SQS and SNS
+
+Software Engineer, AppCloud (2020-2022)
+
+Developed Python backend services
+
+Created monitoring and alerting systems
+
+Maintained CI/CD pipelines
+
+Skills: Python, AWS, Lambda, Terraform, SQS, SNS, Docker, Git

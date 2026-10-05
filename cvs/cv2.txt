@@ -1,0 +1,24 @@
+Emily Carter
+emily.carter@email.com | +44 7700 845217
+
+Summary: Full-stack developer with 4 years of experience building
+modern web applications and backend services.
+
+Experience:
+Full Stack Developer, BrightLabs (2022-2026)
+
+Built applications with React and Node.js
+
+Designed REST APIs and database schemas
+
+Used Docker for local and production environments
+
+Junior Developer, WebForge (2020-2022)
+
+Developed frontend features with TypeScript
+
+Integrated third-party APIs
+
+Maintained MongoDB databases
+
+Skills: JavaScript, TypeScript, React, Node.js, Express, MongoDB, Docker, Git

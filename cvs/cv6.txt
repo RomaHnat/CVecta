@@ -1,0 +1,24 @@
+Olivia Bennett
+olivia.bennett@email.com | +44 7700 598274
+
+Summary: Backend developer with 4 years of experience building
+high-performance services and database-driven applications.
+
+Experience:
+Backend Developer, FinTech Solutions (2022-2026)
+
+Developed APIs using C# and .NET
+
+Designed SQL Server database structures
+
+Implemented authentication and authorization systems
+
+Software Developer, AppWorks (2020-2022)
+
+Built internal web applications
+
+Created automated tests with NUnit
+
+Integrated external payment APIs
+
+Skills: C#, .NET, ASP.NET Core, SQL Server, Azure, Docker, NUnit, Git

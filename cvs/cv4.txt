@@ -1,0 +1,24 @@
+Sophie Wilson
+sophie.wilson@email.com | +44 7700 651903
+
+Summary: Software engineer with 3 years of experience creating
+Python services, APIs and data processing applications.
+
+Experience:
+Software Engineer, DataBridge (2023-2026)
+
+Built APIs with FastAPI and Pydantic
+
+Processed data using Python and Pandas
+
+Deployed services to AWS
+
+Junior Software Engineer, PixelStack (2022-2023)
+
+Developed internal automation tools
+
+Added unit and integration tests
+
+Worked with PostgreSQL databases
+
+Skills: Python, FastAPI, Pandas, PostgreSQL, AWS, Docker, Pytest, Git

@@ -1,0 +1,24 @@
+Noah Richardson
+noah.richardson@email.com | +44 7700 712638
+
+Summary: Software engineer with 4 years of experience specializing
+in backend development, APIs and relational databases.
+
+Experience:
+Backend Engineer, BluePeak Software (2022-2026)
+
+Built APIs using Kotlin and Spring Boot
+
+Worked with PostgreSQL and Redis
+
+Developed automated integration tests
+
+Software Developer, AppSphere (2021-2022)
+
+Maintained Java backend applications
+
+Added new REST API endpoints
+
+Supported production deployments
+
+Skills: Kotlin, Java, Spring Boot, PostgreSQL, Redis, Docker, AWS, JUnit
