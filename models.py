@@ -48,3 +48,8 @@ class MatchResult(BaseModel):
         default_factory=list, description="Key requirements the candidate lacks"
     )
     reasoning: str = Field(description="One or two sentence explanation of the score")
+
+class ComparisonResult(BaseModel):
+    
+    winner: str = Field(description="The exact name of the single best candidate")
+    reasoning: str = Field(description="Why this candidate was chosen over the others")
