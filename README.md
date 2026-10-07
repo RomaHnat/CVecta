@@ -11,8 +11,6 @@ decision loop, and an automated evaluation harness.
 
 ## Demo
 
-![CVecta screening output](docs/demo.png)
-
 > Paste a job description → get a ranked shortlist with matched/missing skills,
 > a one-line verdict per candidate, and a recommended hire.
 
