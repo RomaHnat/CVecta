@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from ocr import OCR_AVAILABLE
 
 from graph import screen, SHORTLIST_THRESHOLD
 
@@ -26,6 +27,9 @@ if st.button("Screen", type="primary"):
 
     with st.spinner("Screening candidates..."):
         state = screen(job_text)
+        if state.get("unprocessed"):
+            reason = "Tesseract OCR is not installed" if not OCR_AVAILABLE else "they couldn't be read even after OCR"
+            st.warning("⚠️ Not processed because " + reason + ": " + ", ".join(state["unprocessed"]))
 
     job = state["job"]
     ranked = state["ranked"]
@@ -35,13 +39,13 @@ if st.button("Screen", type="primary"):
 
     # Recommended hire (the output of the head-to-head comparison node)
     if best:
-        st.success(f"**Recommended hire: {best.candidate}**\n\n{state['best_reason']}")
+        st.success(f"**Recommended hire: {best.candidate}** — `{best.source}`\n\n{state['best_reason']}")
 
-    # Ranked shortlist table
     rows = [
         {
             "Rank": i,
             "Candidate": r.candidate,
+            "File": r.source,
             "Score": r.score,
             "Shortlisted": "✅" if r.score >= SHORTLIST_THRESHOLD else "",
             "Matched": ", ".join(r.matched),

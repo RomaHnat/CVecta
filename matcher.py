@@ -4,6 +4,7 @@ from config import fast
 from models import MatchResult
 from extract import extract_job
 from vectorstore import get_vector_store
+from loaders import read_cv_text
 
 CV_FOLDER = "cvs"
 
@@ -39,7 +40,9 @@ def evaluate_candidate(job, cv_text: str, source: str) -> MatchResult:
         f"MIN YEARS: {job.min_years_experience}\n\n"
         f"CANDIDATE CV ({source}):\n{cv_text}"
     )
-    return match_evaluator.invoke(prompt)
+    result = match_evaluator.invoke(prompt)
+    result.source = source
+    return result
 
 
 def screen(job_text: str):
@@ -49,8 +52,7 @@ def screen(job_text: str):
 
     results = []
     for src in sources:
-        with open(os.path.join(CV_FOLDER, src), encoding="utf-8") as f:
-            cv_text = f.read()
+        cv_text = read_cv_text(os.path.join(CV_FOLDER, src))
         results.append(evaluate_candidate(job, cv_text, src))
 
     results.sort(key=lambda r: r.score, reverse=True)   # best first

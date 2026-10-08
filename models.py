@@ -40,6 +40,7 @@ class JobRequirements(BaseModel):
 class MatchResult(BaseModel):
 
     candidate: str = Field(description="The candidate's name")
+    source: str = Field(default="", description="The CV filename this result came from")
     score: int = Field(description="Match score from 0 to 100")
     matched: list[str] = Field(
         default_factory=list, description="Key requirements the candidate meets"
@@ -51,5 +52,5 @@ class MatchResult(BaseModel):
 
 class ComparisonResult(BaseModel):
     
-    winner: str = Field(description="The exact name of the single best candidate")
-    reasoning: str = Field(description="Why this candidate was chosen over the others")
+    winner: str = Field(description="The exact FILE value of the single best CV")
+    reasoning: str = Field(description="Why this CV was chosen over the others")

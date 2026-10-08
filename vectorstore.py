@@ -4,6 +4,7 @@ import shutil
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from loaders import read_cv_text, SUPPORTED_EXTS
 
 CV_FOLDER = "cvs"
 DB_DIR = "chroma_db"
@@ -22,15 +23,10 @@ def build_vector_store():
 
     all_chunks = []
     for filename in os.listdir(CV_FOLDER):
-        if not filename.endswith(".txt"):
+        if not filename.lower().endswith(SUPPORTED_EXTS):
             continue
-        with open(os.path.join(CV_FOLDER, filename), "r", encoding="utf-8") as f:
-            text = f.read()
-
-        chunks = splitter.create_documents(
-            texts=[text],
-            metadatas=[{"source": filename}],
-        )
+        text = read_cv_text(os.path.join(CV_FOLDER, filename))
+        chunks = splitter.create_documents(texts=[text], metadatas=[{"source": filename}])
         all_chunks.extend(chunks)
 
     db = Chroma.from_documents(

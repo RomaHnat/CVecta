@@ -24,12 +24,25 @@ then decides whether a head-to-head `compare` pass is warranted.
 flowchart TD
     start([START]) --> extract[extract_job_requirements]
     extract --> retrieve["retrieve_candidate_pool<br/>(RAG — vector search)"]
-    retrieve -->|decide| evaluate[evaluate_candidate]
-    evaluate -->|more candidates?| evaluate
-    evaluate -->|all scored| rank[rank + build shortlist]
+
+    retrieve -->|more candidates| load["load_candidate<br/>(light text extraction)"]
+    retrieve -->|none left| rank
+
+    load -->|readable| score[score_candidate]
+    load -->|PDF unreadable, OCR available| ocr["ocr_candidate<br/>(Tesseract — optional)"]
+    load -->|unreadable, no OCR| skip[skip_candidate]
+
+    ocr -->|readable| score
+    ocr -->|still unreadable| skip
+
+    score -->|more candidates| load
+    score -->|all scored| rank[rank + build shortlist]
+    skip -->|more candidates| load
+    skip -->|all scored| rank
+
     rank -->|2+ shortlisted| compare["compare<br/>(head-to-head, Sonnet)"]
-    rank -->|otherwise| report[report]
-    compare --> report
+    rank -->|otherwise| report
+    compare --> report[report]
     report --> done([END])
 ```
 
@@ -41,19 +54,30 @@ flowchart TD
 2. **Retrieve (RAG)** — a query built from those requirements is run against a
    Chroma vector store of CV chunks. Cheap vector search narrows the pool to the
    most relevant candidates before any expensive reasoning.
-3. **Evaluate** — each shortlisted CV is scored 0–100 against the role by an LLM,
-   returning matched skills, missing skills, and a short verdict as structured data.
-4. **Rank & compare** — results are ranked; if two or more clear the threshold, a
-   smarter model does a head-to-head reasoning pass to pick the single best hire.
+3. **Load → (OCR fallback) → score** — for each candidate, a light text
+   extraction runs first (`pypdf` / `python-docx` / plain text). A router checks
+   whether it produced usable text. If it did, the CV is scored. If a PDF comes
+   back empty (e.g. a scanned document) **and** Tesseract OCR is installed, an
+   OCR node rescues it, then scoring continues. If the text can't be recovered,
+   the CV is skipped and reported — the pipeline never stalls.
+4. **Score** — each readable CV is scored 0–100 against the role by an LLM,
+   returning matched skills, missing skills, and a short verdict as structured
+   data. Every result is keyed by **filename**, so the same person can appear
+   across several CVs and still be compared file-by-file.
+5. **Rank & compare** — results are ranked; if two or more clear the threshold, a
+   stronger model does a head-to-head reasoning pass to pick the single best hire.
 
 ### Design notes
 
 - **Retrieve-then-reason:** vector search is cheap and fast; LLM reasoning is
   expensive. Narrowing with retrieval first keeps cost down and scales to a large
   CV pool.
-- **Model tiering:** a fast/cheap model (Haiku) does bulk extraction and scoring;
-  a stronger model (Sonnet) is reserved for the final tie-break, where judgment
-  matters most.
+- **Cost-tiered at every step:** cheap text extraction before expensive OCR; a
+  fast model (Haiku) for bulk scoring, a stronger model (Sonnet) only for the
+  final tie-break. Effort is spent where it changes the outcome.
+- **Graceful degradation:** OCR is an optional dependency. If Tesseract isn't
+  installed the graph routes around it, records which CVs it couldn't read, and
+  still runs end-to-end — so the project works on a fresh clone with no extra setup.
 - **Structured output everywhere:** every LLM call returns a validated Pydantic
   object, not free text — so the rest of the pipeline is ordinary, reliable Python.
 
@@ -61,12 +85,16 @@ flowchart TD
 
 - **Python**
 - **LangChain** — structured LLM output, embeddings, vector-store integration
-- **LangGraph** — pipeline orchestration with a decision loop
+- **LangGraph** — pipeline orchestration with decision loops and conditional branches
 - **Chroma** — local persisted vector database
 - **HuggingFace `all-MiniLM-L6-v2`** — local sentence embeddings (free, no API cost)
 - **Pydantic** — schema-guided extraction and validation
+- **pypdf / python-docx** — PDF and Word CV parsing
+- **Tesseract OCR (optional)** via `pytesseract` + `PyMuPDF` — fallback for scanned PDFs
 - **Streamlit** — the demo UI
 - **Anthropic Claude API** — the reasoning models
+
+## Project structure
 
 ## Project structure
 
@@ -74,12 +102,14 @@ flowchart TD
 config.py        # loads env, creates the fast (Haiku) and smart (Sonnet) LLM clients
 models.py        # Pydantic schemas: CandidateProfile, JobRequirements, MatchResult, ComparisonResult
 extract.py       # structured extraction of candidates and job requirements
+loaders.py       # light text extraction (pdf / docx / txt) + readability check
+ocr.py           # optional Tesseract OCR fallback, with graceful degradation
 vectorstore.py   # builds / loads the Chroma vector store from the CV folder
 matcher.py       # RAG retrieval + per-candidate LLM scoring
 graph.py         # the LangGraph pipeline (the agentic core)
 evaluate.py      # automated evaluation harness (positive, top-k and negative cases)
 app.py           # Streamlit UI
-cvs/             # candidate CVs (.txt)
+cvs/             # candidate CVs (.txt / .pdf / .docx)
 ```
 
 ## Running it
@@ -105,7 +135,19 @@ python vectorstore.py
 
 # 6. Launch the demo
 streamlit run app.py
+
 ```
+### Optional: enable OCR for scanned PDFs
+
+By default, scanned (image-only) PDFs are skipped and reported. To process them,
+install the OCR extras plus the Tesseract engine:
+
+```bash
+pip install pytesseract pymupdf pillow
+```
+
+Then install the Tesseract binary (on Windows, the UB-Mannheim build). Without it,
+everything still runs — scanned CVs are simply listed as "not processed".
 
 ## Evaluation
 
@@ -126,10 +168,10 @@ failure, so it works as a regression check in CI.
 - **Sharper scoring** — the current scorer can cluster strong candidates near the
   top; calibrating the scoring prompt (or adding a re-ranking step) would spread
   scores out and reduce reliance on the comparison node.
-- **Real CV parsing** — ingest PDF and DOCX CVs directly instead of plain text.
 - **Metadata filtering** — hard filters (location, work authorization, min years)
   before the LLM stage, so retrieval respects non-negotiables.
 - **Async evaluation** — score candidates concurrently to cut latency.
+- **Better PDF layout handling** — swap `pypdf` for `pdfplumber` on multi-column CVs.
 - **Explainability** — surface which CV passages drove each score.
 - **Deployment** — host the demo on Streamlit Community Cloud.
 
